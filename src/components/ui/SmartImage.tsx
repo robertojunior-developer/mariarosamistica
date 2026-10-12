@@ -8,6 +8,16 @@ interface SmartImageProps {
   height?: number;
 }
 
+/**
+ * Prefixes root-relative paths (e.g. "/images/foo.webp") with Vite's BASE_URL so
+ * assets resolve correctly when the app is published under a sub-path (e.g. GitHub Pages).
+ */
+function withBase(path: string): string {
+  if (!path.startsWith('/')) return path;
+  const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+  return `${base}${path.slice(1)}`;
+}
+
 /** Renders a <picture> with a webp source and a jpg/png fallback for broad browser support. */
 export default function SmartImage({
   src,
@@ -21,7 +31,7 @@ export default function SmartImage({
   if (!fallback) {
     return (
       <img
-        src={src}
+        src={withBase(src)}
         alt={alt}
         className={className}
         loading={loading}
@@ -34,9 +44,9 @@ export default function SmartImage({
 
   return (
     <picture>
-      <source srcSet={src} type="image/webp" />
+      <source srcSet={withBase(src)} type="image/webp" />
       <img
-        src={fallback}
+        src={withBase(fallback)}
         alt={alt}
         className={className}
         loading={loading}

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.mariarosamistica.com.br/sitemap.xml
+Sitemap: https://robertojunior-developer.github.io/mariarosamistica/sitemap.xml
